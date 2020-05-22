@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useLocation } from 'react-router-dom'
 import HeaderAction from "./HeaderAction";
 import HasPermission from "../HasPermission";
+import Cart from "../Cart/Cart";
 
 const Navigation = styled.nav`
     display: flex; 
@@ -22,6 +23,7 @@ const NavList = styled.ul`
 type Props = {
     items: NavigationItem[];
     actions: NavigationItem[]
+    canViewCart?: boolean;
 };
 
 export interface NavigationItem {
@@ -31,7 +33,7 @@ export interface NavigationItem {
     requiredRoles?: string[]
 }
 
-const Header: React.FC<Props> = ({items, actions}) => {
+const Header: React.FC<Props> = ({items, actions, canViewCart}) => {
 
     const location = useLocation()
 
@@ -55,6 +57,7 @@ const Header: React.FC<Props> = ({items, actions}) => {
             </NavList>
 
             <NavList>
+                {canViewCart && <Cart />}
                 {
                     actions.map((item, index) => (
                         <HasPermission key={index} requiredRoles={item.requiredRoles ? item.requiredRoles : [] }>

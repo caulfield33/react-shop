@@ -1,22 +1,22 @@
 import {AuthActionTypes} from "./types";
-import {takeEvery, put, call} from 'redux-saga/effects';
-import AuthService from "../../services/auth.service";
+import {takeEvery, put, delay} from 'redux-saga/effects';
+// import AuthService from "../../services/auth-service";
 import {loginFailure, loginSuccess, logoutFailure, logoutSuccess} from "./actions";
 import {IAuthCredential} from "../../models/IAuthCredential";
 
-const authService = new AuthService()
+// const authService = new AuthService()
 
 function* loginWorker(action: {type: string, payload: IAuthCredential}) {
 
     try {
-        yield call(authService.login, action.payload)
+        yield delay(1000)
 
         const authData = {
             user: {
                 name: 'test',
                 email: 'test@test.test',
                 id: 'sadasd',
-                roles: ['admin']
+                roles: ['user']
             },
             token: 'toke',
             refreshToken: 'refresh',

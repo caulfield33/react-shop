@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
-import {AppContext} from "../context/app.context";
+import {AppContext} from "../context/app-context";
 import {BoxShadow} from "../styled";
 
 const BackDrop = styled.div`
@@ -11,6 +11,12 @@ const BackDrop = styled.div`
 	left: 0;
 	z-index: 1051;
 	background: #0000004f;
+
+    -webkit-animation: fadein var(--base-transition); /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein var(--base-transition); /* Firefox < 16 */
+        -ms-animation: fadein var(--base-transition); /* Internet Explorer */
+         -o-animation: fadein var(--base-transition); /* Opera < 12.1 */
+            animation: fadein var(--base-transition);
 `
 
 const CenteredLoading = styled(BoxShadow)`

@@ -11,11 +11,14 @@ import AuthPage from "../containers/AuthPage";
 import ProfilePage from "../containers/ProfilePage";
 import MyStorePage from "../containers/MyStorePage";
 import DashboardPage from "../containers/DashboardPage";
+import CheckoutLayout from "../layout/CheckoutLayout";
+import CheckoutPage from "../containers/CheckoutPage";
 
 export const appRoutes: IRoute[] = [
     {
         component: HomePage,
         path: '/',
+        layout: MainLayout,
         isPublic: true,
         allowedForLogged: true,
     },
@@ -23,11 +26,13 @@ export const appRoutes: IRoute[] = [
         component: AuthPage,
         path: '/auth',
         isPublic: true,
+        layout: MainLayout,
         allowedForLogged: false,
     },
     {
         component: ProfilePage,
         path: '/profile',
+        layout: MainLayout,
         isPublic: false,
         allowedForLogged: true,
     },
@@ -35,19 +40,29 @@ export const appRoutes: IRoute[] = [
         component: MyStorePage,
         path: '/my-store',
         isPublic: false,
+        layout: MainLayout,
         requiredRoles: ['admin'],
         allowedForLogged: true,
     },
     {
         component: DashboardPage,
         path: '/dashboard',
+        layout: MainLayout,
+        isPublic: false,
+        allowedForLogged: true,
+    },
+    {
+        component: CheckoutPage,
+        path: '/checkout',
+        layout: CheckoutLayout,
         isPublic: false,
         allowedForLogged: true,
     }
 ]
 
 interface Props {
-    Component: React.FC<RouteComponentProps>
+    Component: React.FC<RouteComponentProps>;
+    Layout: React.FC<{isLogged: boolean}>;
     isPublic?: boolean;
     allowedForLogged: boolean;
     authData?: AuthData | null;
@@ -56,18 +71,16 @@ interface Props {
     requiredRoles?: string[]
 }
 
-const ProtectedRoute = ({Component, path, exact = false, authData, requiredRoles, isPublic, allowedForLogged}: Props): JSX.Element => (
+const ProtectedRoute = ({Layout, Component, path, exact = false, authData, requiredRoles, isPublic, allowedForLogged}: Props): JSX.Element => (
     <Route
         exact={exact}
         path={path}
         render={(props: RouteComponentProps) => {
 
-            console.log('dasd')
-
             const content = (
-                <MainLayout>
+                <Layout isLogged={!!(authData! && authData!.user)}>
                     <Component {...props} />
-                </MainLayout>
+                </Layout>
             )
 
             const hasPermission = !requiredRoles ? true : authData && authData.user.roles.some(item => requiredRoles.includes(item))

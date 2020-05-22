@@ -21,7 +21,7 @@ const NavItemWrapper = styled.li`
 
 
 interface HeaderNavigationItem extends NavigationItem  {
-    active: boolean;
+    active?: boolean;
 }
 
 type Props = HeaderNavigationItem;
@@ -29,7 +29,7 @@ type Props = HeaderNavigationItem;
 const HeaderAction: React.FC<Props> = React.memo(({active, path = '', label, callback}) => (
     <NavItemWrapper>
         {callback ? (
-            <NavItemLabel onClick={callback} active={false}>
+            <NavItemLabel onClick={callback} active={active !== undefined ? active : false}>
                 {label}
             </NavItemLabel>
         ) : (

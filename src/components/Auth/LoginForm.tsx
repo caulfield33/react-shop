@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Formik, Form} from 'formik'
 import * as Yup from 'yup'
 import {Redirect} from "react-router";
@@ -8,6 +8,7 @@ import {connect, useDispatch} from "react-redux";
 import {IApplicationState} from "../../models/IApplicationState";
 import {IAuthCredential} from "../../models/IAuthCredential";
 import {loginRequest} from "../../store/auth/actions";
+import {AppContext} from "../../context/app-context";
 
 const StyledForm = styled(Form)``
 const LoginButton = styled(Button)`
@@ -38,11 +39,17 @@ const LoginForm: React.FC<Props> = React.memo( ({loading, errors: authErrors, is
     })
     const dispatch = useDispatch();
 
-    console.log(loading)
-
     const loginHandler = (credential: IAuthCredential) => {
         dispatch(loginRequest(credential))
     }
+
+    const appContext = useContext(AppContext)
+
+    useEffect(() => {
+        appContext.setContext({loading: loading})
+
+        // eslint-disable-next-line
+    }, [loading])
 
     if (authErrors?.length > 0) alert(authErrors)
     if (isLogged) return <Redirect to="/dashboard"/>

@@ -14,8 +14,10 @@ function App() {
                 <LoadingComponent/>
                 <Switch>
 
-                    {appRoutes.map(route => (
+                    {appRoutes.map((route, index) => (
                         <ProtectedRoute
+                            key={index}
+                            Layout={route.layout}
                             isPublic={route.isPublic}
                             allowedForLogged={route.allowedForLogged}
                             path={route.path}

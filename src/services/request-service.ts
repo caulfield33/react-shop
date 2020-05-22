@@ -5,7 +5,6 @@ export default class RequestService {
     protected readonly instance: AxiosInstance;
 
     constructor() {
-        console.log('re')
         this.instance = instance;
     }
 }

@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from "../components/Header/Header";
 import {IHeaderItem} from "../models/IHeaderItem";
-import {IApplicationState} from "../models/IApplicationState";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {logoutRequest} from "../store/auth/actions";
 export const MainWrapper = styled.main``
 
@@ -66,14 +65,12 @@ const MainLayout: React.FC<Props> = ({ children, isLogged }) => {
 
     return (
         <MainWrapper>
-            <Header items={isLogged ? privateItems : publicItems} actions={isLogged ? privateActions : publicActions} />
+            <Header canViewCart={true} items={isLogged ? privateItems : publicItems} actions={isLogged ? privateActions : publicActions} />
             {children}
         </MainWrapper>
     )
 };
 
-const mapStateToProps = ({ auth }: IApplicationState) => ({
-    isLogged: !!auth.authData,
-});
 
-export default connect(mapStateToProps) (MainLayout);
+
+export default MainLayout;
