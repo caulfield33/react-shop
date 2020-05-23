@@ -4,7 +4,7 @@ import {connect, useDispatch} from "react-redux";
 import {IApplicationState} from "../../models/IApplicationState";
 import {MyStoreState} from "../../store/myStore/types";
 import {AppContext} from "../../context/app-context";
-import {itemsRequest} from "../../store/myStore/actions";
+import {clearItems, itemsRequest} from "../../store/myStore/actions";
 import StoreItemCard from "../StoreItem";
 
 const Wrapper = styled.div`
@@ -12,7 +12,6 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
 `
-
 
 type Props = {} & MyStoreState
 const MyStore: React.FC<Props> = ({loading, items, errors}) => {
@@ -23,8 +22,10 @@ const MyStore: React.FC<Props> = ({loading, items, errors}) => {
     useEffect(() => {
         dispatch(itemsRequest())
 
-        // eslint-disable-next-line
-    }, [])
+        return () => {
+            dispatch(clearItems())
+        }
+    }, [dispatch])
 
     useEffect(() => {
         appContext.setContext({loading: loading})
@@ -38,7 +39,7 @@ const MyStore: React.FC<Props> = ({loading, items, errors}) => {
                 <p>No items</p>
             ) : (
                 items.map((item, index) => (
-                    <StoreItemCard item={item} key={index}/>
+                    <StoreItemCard item={item} key={index} addToCart={() => {}} removeFromCart={() =>{}}/>
                 ))
             )}
 

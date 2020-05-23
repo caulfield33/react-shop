@@ -1,19 +1,17 @@
-import {MyStoreActionTypes} from "./types";
+import {CartActionTypes} from "./types";
 import {IStoreItem} from "../../models/IStoreItem";
 
-type Error = string;
-
-export const itemsRequest = () => ({
-    type: MyStoreActionTypes.ITEMS_REQUEST,
+export const addItemToCart = (item: IStoreItem) => ({
+    type: CartActionTypes.ADD_ITEM,
+    payload: item
 });
 
-export const itemsSuccess = (items: IStoreItem[]) => ({
-    type: MyStoreActionTypes.ITEMS_SUCCESS,
-    payload: items
+export const removeItemFromCart = (itemId: string) => ({
+    type: CartActionTypes.REMOVE_ITEM,
+    payload: itemId
 })
-export const itemsFailure = (data: Error[]) => ({
-    type: MyStoreActionTypes.ITEMS_FAILURE,
-    payload: data
+export const clearCart = () => ({
+    type: CartActionTypes.CLEAN_CART,
 })
 
 

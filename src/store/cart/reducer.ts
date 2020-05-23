@@ -1,25 +1,29 @@
-import { Reducer } from "redux";
-import {MyStoreActionTypes, MyStoreState} from "./types";
+import {Reducer} from "redux";
+import {CartActionTypes, CartState} from "./types";
 
-export const initialState: MyStoreState = {
-    items: [],
-    errors: [],
-    loading: false
+const storageUser = localStorage.getItem('react-test-app-items')
+
+export const initialState: CartState = {
+    items: storageUser ? JSON.parse(storageUser).items : {}
 };
 
-const reducer: Reducer<MyStoreState> = (state = initialState, action) => {
+const reducer: Reducer<CartState> = (state = initialState, action) => {
     switch (action.type) {
-        case MyStoreActionTypes.ITEMS_REQUEST: {
-            return { ...state, loading: true };
+        case CartActionTypes.ADD_ITEM: {
+            const newState: any = {...state}
+            newState.items[action.payload.id] = action.payload
+            localStorage.setItem('react-test-app-items', JSON.stringify(newState))
+            return newState;
         }
-        case MyStoreActionTypes.ITEMS_FAILURE: {
-            return { ...state, loading: false, items: action.payload };
+        case CartActionTypes.REMOVE_ITEM: {
+            const newState: any = {...state}
+            delete newState.items[action.payload]
+            localStorage.setItem('react-test-app-items', JSON.stringify(newState))
+            return newState
         }
-        case MyStoreActionTypes.ITEMS_SUCCESS: {
-            return { ...state, loading: false, items: action.payload };
-        }
-        case MyStoreActionTypes.CLEAN_ERRORS: {
-            return { ...state, loading: false, errors: [] };
+        case CartActionTypes.CLEAN_CART: {
+            localStorage.setItem('react-test-app-items', JSON.stringify({items:{}}))
+            return {items: {}}
         }
         default: {
             return state;
@@ -27,4 +31,4 @@ const reducer: Reducer<MyStoreState> = (state = initialState, action) => {
     }
 };
 
-export { reducer as ShopReducer };
+export {reducer as CartReducer};

@@ -12,6 +12,9 @@ const reducer: Reducer<StoreState> = (state = initialState, action) => {
         case StoreActionTypes.ITEMS_REQUEST: {
             return { ...state, loading: true };
         }
+        case StoreActionTypes.ITEMS_CLEAR: {
+            return { ...state, items: [] };
+        }
         case StoreActionTypes.ITEMS_FAILURE: {
             return { ...state, loading: false, items: action.payload };
         }

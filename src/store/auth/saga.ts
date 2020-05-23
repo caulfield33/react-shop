@@ -16,7 +16,7 @@ function* loginWorker(action: {type: string, payload: IAuthCredential}) {
                 name: 'test',
                 email: 'test@test.test',
                 id: 'sadasd',
-                roles: ['user']
+                roles: ['admin']
             },
             token: 'toke',
             refreshToken: 'refresh',

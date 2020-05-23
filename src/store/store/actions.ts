@@ -7,6 +7,10 @@ export const itemsRequest = () => ({
     type: StoreActionTypes.ITEMS_REQUEST,
 });
 
+export const clearItems = () => ({
+    type: StoreActionTypes.ITEMS_CLEAR,
+})
+
 export const itemsSuccess = (items: IStoreItem[]) => ({
     type: StoreActionTypes.ITEMS_SUCCESS,
     payload: items

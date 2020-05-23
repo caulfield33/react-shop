@@ -2,11 +2,12 @@ import React, {useContext, useEffect} from 'react';
 import styled from "styled-components";
 import {connect, useDispatch} from "react-redux";
 import {IApplicationState} from "../../models/IApplicationState";
-import {AppContext} from "../../context/app-context";
-import {itemsRequest} from "../../store/store/actions";
-import StoreItemCard, {StoreItemCardProps} from "../StoreItem";
+import {itemsRequest, clearItems} from "../../store/store/actions";
+import StoreItemCard from "../StoreItem";
 import {StoreState} from "../../store/store/types";
 import {IStoreItem} from "../../models/IStoreItem";
+import {addItemToCart, removeItemFromCart} from "../../store/cart/actions";
+import {AppContext} from "../../context/app-context";
 
 const Wrapper = styled.div`
     display: flex;
@@ -14,9 +15,11 @@ const Wrapper = styled.div`
     justify-content: space-around;
 `
 
-type Props = {} & StoreState
+type Props = {
+    cartItems: { [itemId: string]: IStoreItem }
+} & StoreState
 
-const Home: React.FC<Props> = ({loading, items, errors}) => {
+const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems}) => {
     const dispatch = useDispatch();
 
     const appContext = useContext(AppContext)
@@ -24,17 +27,20 @@ const Home: React.FC<Props> = ({loading, items, errors}) => {
     useEffect(() => {
         dispatch(itemsRequest())
 
-        // eslint-disable-next-line
-    }, [])
+        return () => {
+            dispatch(clearItems())
+        }
+    }, [dispatch])
 
-    useEffect(() => {
-        appContext.setContext({loading: loading})
+    // eslint-disable-next-line
+    useEffect(() => appContext.setContext({loading: loading}), [loading])
 
-        // eslint-disable-next-line
-    }, [loading])
+    const addToCartHandler = (item: IStoreItem) => {
+        dispatch(addItemToCart(item))
+    }
 
-    const addToCartHandler = (itemId: number) => {
-        console.log(itemId)
+    const removeItemFromCartHandler = (itemId: number) => {
+        dispatch(removeItemFromCart(`${itemId}`))
     }
 
     return (
@@ -42,23 +48,24 @@ const Home: React.FC<Props> = ({loading, items, errors}) => {
             {items.length === 0 ? (
                 <p>No items</p>
             ) : (
-                items.map((item, index) => {
-                    const props: StoreItemCardProps = {
-                        addToCart: addToCartHandler,
-                        item: item
-                    }
-
-                    return  (
-                        <StoreItemCard {...props} key={index}/>
-                    )
-                })
+                items.map((item, index) => (
+                    <StoreItemCard
+                        item={item}
+                        addToCart={addToCartHandler}
+                        removeFromCart={removeItemFromCartHandler}
+                        key={index}/>
+                ))
             )}
 
         </Wrapper>
     )
-};
+}, (prevProps, nextProps) => (prevProps === nextProps));
 
-const mapStateToProps = ({store}: IApplicationState) => store
 
-export default connect(mapStateToProps) (Home);
+const mapStateToProps = ({store, cart}: IApplicationState) => ({
+    ...store,
+    cartItems: cart.items
+})
+
+export default connect(mapStateToProps)(Home);
 

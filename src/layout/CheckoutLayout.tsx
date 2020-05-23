@@ -22,8 +22,8 @@ const CheckoutLayout: React.FC<Props> = ({ children }) => {
 
     const actions: IHeaderItem[] = [
         {
-            path: '/profile',
-            label: 'Profile',
+            callback: () => console.log('back'),
+            label: 'Back',
         },
         {
             path: '/logout',

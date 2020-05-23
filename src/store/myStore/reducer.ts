@@ -9,6 +9,9 @@ export const initialState: MyStoreState = {
 
 const reducer: Reducer<MyStoreState> = (state = initialState, action) => {
     switch (action.type) {
+        case MyStoreActionTypes.ITEMS_CLEAR: {
+            return { ...state, items: [] };
+        }
         case MyStoreActionTypes.ITEMS_REQUEST: {
             return { ...state, loading: true };
         }

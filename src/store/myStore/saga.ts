@@ -2,17 +2,16 @@ import {MyStoreActionTypes} from "./types";
 import {takeEvery, put, delay} from 'redux-saga/effects';
 // import ShopService from "../../services/shop-service";
 import {itemsFailure, itemsSuccess} from "./actions";
-import {items} from "../../data/items";
-import {IMyStoreItem} from "../../models/IMyStoreItem";
+import {myItems} from "../../data/myItems";
 
 // const shopService = new ShopService()
 
 function* myStoreItemsWorker() {
 
     try {
-        yield delay(1000)
+        yield delay(500)
 
-        yield put(itemsSuccess(items as IMyStoreItem[]))
+        yield put(itemsSuccess(myItems))
 
     } catch (e) {
         console.log(e)

@@ -9,7 +9,7 @@ import {items} from "../../data/items";
 function* storeItemsWorker() {
 
     try {
-        yield delay(1000)
+        yield delay(500)
 
         yield put(itemsSuccess(items))
 
