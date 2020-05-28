@@ -14,4 +14,16 @@ export const clearCart = () => ({
     type: CartActionTypes.CLEAN_CART,
 })
 
+export const orderRequest = () => ({
+    type: CartActionTypes.ORDER_REQUEST,
+})
+
+export const orderSuccess = () => ({
+    type: CartActionTypes.ORDER_SUCCESS,
+})
+
+export const orderFailure = () => ({
+    type: CartActionTypes.ORDER_FAILURE,
+})
+
 

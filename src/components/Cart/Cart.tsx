@@ -22,6 +22,8 @@ const CartBody = styled(BoxShadow)`
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    min-width: 328px;
+    
 `
 const List = styled.div`
     overflow-x: auto;
@@ -59,7 +61,7 @@ const Cart: React.FC<Props> = () => {
             <HeaderAction active={isOpen} label={'Cart'} callback={openCartHandler}/>
             {isOpen && (
                 <CartBody>
-                    <CheckOut to={'/checkout'}>Go To checkout</CheckOut>
+                    {itemsList.length !== 0 && <CheckOut to={'/checkout'}>Go To checkout</CheckOut>}
 
                     <List>
                         {itemsList.length === 0 ? (

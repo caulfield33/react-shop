@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import {IStoreItem} from "../models/IStoreItem";
 import {IMyStoreItem} from "../models/IMyStoreItem";
 import styled from "styled-components";
@@ -33,10 +33,10 @@ const ItemActions = styled.div`
 export type StoreItemCardProps = {
     item: IStoreItem | IMyStoreItem;
     addToCart: (item: IStoreItem) => void;
-    removeFromCart: (itemId: number) => void | null;
+    removeFromCart: (itemId: number) => void;
 }
 
-const StoreItemCard: React.FC<StoreItemCardProps> = React.memo(({item, addToCart, removeFromCart}) => {
+const StoreItemCard: React.FC<StoreItemCardProps> = ({item, addToCart, removeFromCart}) => {
 
     const [selected, setSelected] = useState(false)
 
@@ -50,8 +50,8 @@ const StoreItemCard: React.FC<StoreItemCardProps> = React.memo(({item, addToCart
     }, [cart])
 
     const addHandler = () => {
-       addToCart(item)
-       setSelected(true)
+        addToCart(item)
+        setSelected(true)
     }
 
     const removeHandler = () => {
@@ -62,7 +62,7 @@ const StoreItemCard: React.FC<StoreItemCardProps> = React.memo(({item, addToCart
     return (
         <Wrapper>
             <Link to={`item/${item.id}`}>
-                <ItemImage src={'https://via.placeholder.com/200'} alt={item.name} />
+                <ItemImage src={'https://via.placeholder.com/200'} alt={item.name}/>
             </Link>
             {item.name}
 
@@ -72,6 +72,6 @@ const StoreItemCard: React.FC<StoreItemCardProps> = React.memo(({item, addToCart
             </ItemActions>
         </Wrapper>
     )
-})
+}
 
 export default StoreItemCard

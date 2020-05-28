@@ -1,11 +1,8 @@
 import {IMyStoreItem} from "../../models/IMyStoreItem";
+import {StoreState} from "../store/types";
 
-export interface MyStoreState {
-    readonly loading: boolean;
+export interface MyStoreState extends StoreState{
     readonly items: IMyStoreItem[];
-    readonly errors: string[];
-    readonly pages: number;
-    readonly currentPage: number;
 }
 
 export enum MyStoreActionTypes {

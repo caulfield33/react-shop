@@ -1,16 +1,19 @@
 import {MyStoreActionTypes} from "./types";
 import {takeEvery, put, delay} from 'redux-saga/effects';
 import {itemsFailure, itemsSuccess} from "./actions";
-import {items} from "../../data/items";
+import {myItems} from "../../data/myItems";
 
 function* myStoreItemsWorker(action: any) {
 
     try {
-        const itemsToReturn = items.slice(10 * action.payload, (10 * action.payload) + 10)
-
         yield delay(500)
 
-        yield put(itemsSuccess({items: itemsToReturn,  pages: Math.round((items.length / 10) + 0.51) }))
+        yield put(itemsSuccess({
+            totalItems: myItems.length,
+            items: myItems.slice(10 * action.payload, (10 * action.payload) + 10),
+            pages: Math.round((myItems.length / 10) + 0.51),
+            currentPage: action.payload
+        }))
 
     } catch (e) {
         console.log(e)

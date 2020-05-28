@@ -1,4 +1,4 @@
-import {AuthActionTypes} from "./types";
+import {AuthActionTypes, AuthData} from "./types";
 import {takeEvery, put, delay} from 'redux-saga/effects';
 // import AuthService from "../../services/auth-service";
 import {loginFailure, loginSuccess, logoutFailure, logoutSuccess} from "./actions";
@@ -11,12 +11,13 @@ function* loginWorker(action: {type: string, payload: IAuthCredential}) {
     try {
         yield delay(1000)
 
-        const authData = {
+        const authData: AuthData = {
             user: {
                 name: 'test',
                 email: 'test@test.test',
                 id: 'sadasd',
-                roles: ['admin']
+                roles: ['admin'],
+                orders: []
             },
             token: 'toke',
             refreshToken: 'refresh',

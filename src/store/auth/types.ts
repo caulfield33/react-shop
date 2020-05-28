@@ -4,6 +4,7 @@ export interface AuthData {
     user: IUser;
     token: string;
     refreshToken: string;
+    expireToken: string;
 }
 
 export interface AuthState {
@@ -24,6 +25,8 @@ export enum AuthActionTypes {
     LOGOUT_SUCCESS = "@@auth/LOGOUT_SUCCESS",
     LOGOUT_FAILURE = "@@auth/LOGOUT_FAILURE",
     LOGOUT_REQUEST = "@@auth/LOGOUT_REQUEST",
+
+    ORDERS_UPDATE = "@@auth/ORDERS_UPDATE",
 
     CLEAN_ERRORS = "@@auth/CLEAN_ERRORS"
 }

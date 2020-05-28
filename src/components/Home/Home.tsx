@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {IApplicationState} from "../../models/IApplicationState";
@@ -18,10 +18,10 @@ type Props = {}
 
 const Home: React.FC<Props> = () => {
     const dispatch = useDispatch();
-
+    const [homeItems, setHomeItems] = useState()
     const appContext = useContext(AppContext)
+    const {items, loading, currentPage} = useSelector((state: IApplicationState) => state.store);
 
-    const {items, pages, loading, currentPage, totalItems} = useSelector((state: IApplicationState) => state.store);
 
     useEffect(() => {
         dispatch(itemsRequest(currentPage))
@@ -35,35 +35,26 @@ const Home: React.FC<Props> = () => {
     // eslint-disable-next-line
     useEffect(() => appContext.setContext({loading: loading}), [loading])
 
-    const addToCartHandler = (item: IStoreItem) => {
-        dispatch(addItemToCart(item))
-    }
+    const addToCartHandler = (item: IStoreItem) => dispatch(addItemToCart(item));
+    const removeItemFromCartHandler = (itemId: number) => dispatch(removeItemFromCart(`${itemId}`));
+    // const loadingHandler = () => dispatch(itemsRequest(currentPage + 1));
 
-    const removeItemFromCartHandler = (itemId: number) => {
-        dispatch(removeItemFromCart(`${itemId}`))
-    }
-
-    const loadingHandler = () => {
-        console.log('loading')
-        dispatch(itemsRequest(currentPage + 1))
-    }
+    useEffect(() => {
+        setHomeItems(items.map((item, index) => (
+            <StoreItemCard
+                item={item}
+                addToCart={addToCartHandler}
+                removeFromCart={removeItemFromCartHandler}
+                key={index}/>
+        )))
+        // eslint-disable-next-line
+    }, [items])
 
     return (
         <Wrapper>
             {items.length === 0 ? (
                 <p>No items</p>
-            ) : (
-                <div>
-                    {items.map((item, index) => (
-                        <StoreItemCard
-                            item={item}
-                            addToCart={addToCartHandler}
-                            removeFromCart={removeItemFromCartHandler}
-                            key={index}/>
-                    ))}
-                </div>
-            )}
-
+            ) : homeItems}
         </Wrapper>
     )
 }

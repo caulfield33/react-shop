@@ -10,7 +10,6 @@ export const itemRequest = (itemId: ItemId) => ({
     payload: itemId
 });
 
-
 export const itemsRequest = (page: Page = 0) => ({
     type: StoreActionTypes.ITEMS_REQUEST,
     payload: page

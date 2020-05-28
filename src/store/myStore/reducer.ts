@@ -7,6 +7,7 @@ export const initialState: MyStoreState = {
     loading: false,
     pages: 0,
     currentPage: 0,
+    totalItems: 0
 };
 
 const reducer: Reducer<MyStoreState> = (state = initialState, action) => {
@@ -21,7 +22,12 @@ const reducer: Reducer<MyStoreState> = (state = initialState, action) => {
             return { ...state, loading: false, ...action.payload };
         }
         case MyStoreActionTypes.ITEMS_SUCCESS: {
-            return { ...state, loading: false, ...action.payload };
+            return {
+                ...state,
+                ...action.payload,
+                loading: false,
+                items: state.items.concat(action.payload.items),
+            };
         }
         case MyStoreActionTypes.CLEAN_ERRORS: {
             return { ...state, loading: false, errors: [] };
