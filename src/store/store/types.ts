@@ -6,6 +6,7 @@ export interface StoreState {
     readonly errors: string[];
     readonly pages: number;
     readonly currentPage: number;
+    readonly totalItems: number;
 }
 
 export enum StoreActionTypes {

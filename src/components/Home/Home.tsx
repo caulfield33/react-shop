@@ -1,10 +1,9 @@
 import React, {useContext, useEffect} from 'react';
 import styled from "styled-components";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {IApplicationState} from "../../models/IApplicationState";
 import {itemsRequest, clearItems} from "../../store/store/actions";
 import StoreItemCard from "../StoreItem";
-import {StoreState} from "../../store/store/types";
 import {IStoreItem} from "../../models/IStoreItem";
 import {addItemToCart, removeItemFromCart} from "../../store/cart/actions";
 import {AppContext} from "../../context/app-context";
@@ -15,14 +14,14 @@ const Wrapper = styled.div`
     justify-content: space-around;
 `
 
-type Props = {
-    cartItems: { [itemId: string]: IStoreItem }
-} & StoreState
+type Props = {}
 
-const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems, currentPage, pages}) => {
+const Home: React.FC<Props> = () => {
     const dispatch = useDispatch();
 
     const appContext = useContext(AppContext)
+
+    const {items, pages, loading, currentPage, totalItems} = useSelector((state: IApplicationState) => state.store);
 
     useEffect(() => {
         dispatch(itemsRequest(currentPage))
@@ -46,8 +45,7 @@ const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems, cu
 
     const loadingHandler = () => {
         console.log('loading')
-
-        return 1
+        dispatch(itemsRequest(currentPage + 1))
     }
 
     return (
@@ -55,24 +53,21 @@ const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems, cu
             {items.length === 0 ? (
                 <p>No items</p>
             ) : (
-                items.map((item, index) => (
-                    <StoreItemCard
-                        item={item}
-                        addToCart={addToCartHandler}
-                        removeFromCart={removeItemFromCartHandler}
-                        key={index}/>
-                ))
+                <div>
+                    {items.map((item, index) => (
+                        <StoreItemCard
+                            item={item}
+                            addToCart={addToCartHandler}
+                            removeFromCart={removeItemFromCartHandler}
+                            key={index}/>
+                    ))}
+                </div>
             )}
 
         </Wrapper>
     )
-}, (prevProps, nextProps) => (prevProps === nextProps));
+}
 
 
-const mapStateToProps = ({store, cart}: IApplicationState) => ({
-    ...store,
-    cartItems: cart.items
-})
-
-export default connect(mapStateToProps)(Home);
+export default Home;
 

@@ -1,4 +1,4 @@
-import { Reducer } from "redux";
+import {Reducer} from "redux";
 import {StoreActionTypes, StoreState} from "./types";
 
 export const initialState: StoreState = {
@@ -6,25 +6,31 @@ export const initialState: StoreState = {
     errors: [],
     loading: false,
     pages: 0,
-    currentPage: 0
+    currentPage: 0,
+    totalItems: 0
 };
 
 const reducer: Reducer<StoreState> = (state = initialState, action) => {
     switch (action.type) {
         case StoreActionTypes.ITEMS_REQUEST: {
-            return { ...state, loading: true };
+            return {...state, loading: true};
         }
         case StoreActionTypes.ITEMS_CLEAR: {
-            return { ...state, items: [] };
+            return initialState;
         }
         case StoreActionTypes.ITEMS_FAILURE: {
-            return { ...state, loading: false, ...action.payload };
+            return {...state, loading: false, ...action.payload};
         }
         case StoreActionTypes.ITEMS_SUCCESS: {
-            return { ...state, loading: false, ...action.payload };
+            return {
+                ...state,
+                ...action.payload,
+                loading: false,
+                items: state.items.concat(action.payload.items),
+            };
         }
         case StoreActionTypes.CLEAN_ERRORS: {
-            return { ...state, loading: false, errors: [] };
+            return {...state, loading: false, errors: []};
         }
         default: {
             return state;
@@ -32,4 +38,4 @@ const reducer: Reducer<StoreState> = (state = initialState, action) => {
     }
 };
 
-export { reducer as StoreReducer };
+export {reducer as StoreReducer};

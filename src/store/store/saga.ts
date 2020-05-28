@@ -1,12 +1,10 @@
 import {StoreActionTypes} from "./types";
 import {takeEvery, put, delay} from 'redux-saga/effects';
-// import ShopService from "../../services/shop-service";
 import {itemsFailure, itemsSuccess} from "./actions";
 import {items} from "../../data/items";
+import { AnyAction } from "redux";
 
-// const shopService = new ShopService()
-
-function* storeItemsWorker(action: any) {
+function* storeItemsWorker(action: AnyAction) {
 
     try {
 
@@ -14,7 +12,12 @@ function* storeItemsWorker(action: any) {
 
         yield delay(500)
 
-        yield put(itemsSuccess({items: itemsToReturn, pages: Math.round((items.length / 10) + 0.51) }))
+        yield put(itemsSuccess({
+            totalItems:items.length,
+            items: itemsToReturn,
+            pages: Math.round((items.length / 10) + 0.51),
+            currentPage: action.payload
+        }))
 
 
     } catch (e) {
