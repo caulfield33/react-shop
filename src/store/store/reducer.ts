@@ -4,7 +4,9 @@ import {StoreActionTypes, StoreState} from "./types";
 export const initialState: StoreState = {
     items: [],
     errors: [],
-    loading: false
+    loading: false,
+    pages: 0,
+    currentPage: 0
 };
 
 const reducer: Reducer<StoreState> = (state = initialState, action) => {
@@ -16,10 +18,10 @@ const reducer: Reducer<StoreState> = (state = initialState, action) => {
             return { ...state, items: [] };
         }
         case StoreActionTypes.ITEMS_FAILURE: {
-            return { ...state, loading: false, items: action.payload };
+            return { ...state, loading: false, ...action.payload };
         }
         case StoreActionTypes.ITEMS_SUCCESS: {
-            return { ...state, loading: false, items: action.payload };
+            return { ...state, loading: false, ...action.payload };
         }
         case StoreActionTypes.CLEAN_ERRORS: {
             return { ...state, loading: false, errors: [] };

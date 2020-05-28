@@ -4,6 +4,8 @@ export interface MyStoreState {
     readonly loading: boolean;
     readonly items: IMyStoreItem[];
     readonly errors: string[];
+    readonly pages: number;
+    readonly currentPage: number;
 }
 
 export enum MyStoreActionTypes {

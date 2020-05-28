@@ -6,12 +6,16 @@ import {items} from "../../data/items";
 
 // const shopService = new ShopService()
 
-function* storeItemsWorker() {
+function* storeItemsWorker(action: any) {
 
     try {
+
+        const itemsToReturn = items.slice(10 * action.payload, (10 * action.payload) + 10)
+
         yield delay(500)
 
-        yield put(itemsSuccess(items))
+        yield put(itemsSuccess({items: itemsToReturn, pages: Math.round((items.length / 10) + 0.51) }))
+
 
     } catch (e) {
         console.log(e)

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {BoxShadow, Button} from "../styled";
 import {useSelector} from "react-redux";
 import {IApplicationState} from "../models/IApplicationState";
+import {Link} from "react-router-dom";
 
 const Wrapper = styled(BoxShadow)`
     display: flex;
@@ -14,7 +15,7 @@ const Wrapper = styled(BoxShadow)`
     margin: 10px;
 `
 
-const ItemImage = styled.img`
+export const ItemImage = styled.img`
     margin-left: -1px;
 `
 
@@ -60,7 +61,9 @@ const StoreItemCard: React.FC<StoreItemCardProps> = React.memo(({item, addToCart
 
     return (
         <Wrapper>
-            <ItemImage src={'https://via.placeholder.com/200'} alt={item.name} />
+            <Link to={`item/${item.id}`}>
+                <ItemImage src={'https://via.placeholder.com/200'} alt={item.name} />
+            </Link>
             {item.name}
 
             <ItemActions>

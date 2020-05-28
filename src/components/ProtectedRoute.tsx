@@ -13,6 +13,7 @@ import MyStorePage from "../containers/MyStorePage";
 import DashboardPage from "../containers/DashboardPage";
 import CheckoutLayout from "../layout/CheckoutLayout";
 import CheckoutPage from "../containers/CheckoutPage";
+import StoreItemPage from "../containers/StoreItemPage";
 
 export const appRoutes: IRoute[] = [
     {
@@ -56,6 +57,13 @@ export const appRoutes: IRoute[] = [
         path: '/checkout',
         layout: CheckoutLayout,
         isPublic: false,
+        allowedForLogged: true,
+    },
+    {
+        component: StoreItemPage,
+        path: '/item/:itemId',
+        layout: MainLayout,
+        isPublic: true,
         allowedForLogged: true,
     }
 ]

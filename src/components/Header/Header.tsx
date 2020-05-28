@@ -57,7 +57,6 @@ const Header: React.FC<Props> = ({items, actions, canViewCart}) => {
             </NavList>
 
             <NavList>
-                {canViewCart && <Cart />}
                 {
                     actions.map((item, index) => (
                         <HasPermission key={index} requiredRoles={item.requiredRoles ? item.requiredRoles : [] }>
@@ -70,6 +69,7 @@ const Header: React.FC<Props> = ({items, actions, canViewCart}) => {
 
                     ))
                 }
+                {canViewCart && <Cart />}
             </NavList>
 
         </Navigation>

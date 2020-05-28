@@ -14,18 +14,19 @@ const Wrapper = styled.div`
 `
 
 type Props = {} & MyStoreState
-const MyStore: React.FC<Props> = ({loading, items, errors}) => {
+const MyStore: React.FC<Props> = ({loading, items, errors, currentPage, pages}) => {
     const dispatch = useDispatch();
 
     const appContext = useContext(AppContext)
 
     useEffect(() => {
-        dispatch(itemsRequest())
+        dispatch(itemsRequest(currentPage))
 
         return () => {
             dispatch(clearItems())
         }
-    }, [dispatch])
+        // eslint-disable-next-line
+    }, [currentPage])
 
     useEffect(() => {
         appContext.setContext({loading: loading})

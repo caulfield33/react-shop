@@ -19,18 +19,19 @@ type Props = {
     cartItems: { [itemId: string]: IStoreItem }
 } & StoreState
 
-const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems}) => {
+const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems, currentPage, pages}) => {
     const dispatch = useDispatch();
 
     const appContext = useContext(AppContext)
 
     useEffect(() => {
-        dispatch(itemsRequest())
+        dispatch(itemsRequest(currentPage))
 
         return () => {
             dispatch(clearItems())
         }
-    }, [dispatch])
+        // eslint-disable-next-line
+    }, [])
 
     // eslint-disable-next-line
     useEffect(() => appContext.setContext({loading: loading}), [loading])
@@ -41,6 +42,12 @@ const Home: React.FC<Props> = React.memo(({loading, items, errors, cartItems}) =
 
     const removeItemFromCartHandler = (itemId: number) => {
         dispatch(removeItemFromCart(`${itemId}`))
+    }
+
+    const loadingHandler = () => {
+        console.log('loading')
+
+        return 1
     }
 
     return (
