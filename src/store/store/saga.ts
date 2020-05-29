@@ -8,7 +8,7 @@ function* storeItemsWorker(action: AnyAction) {
 
     try {
 
-        const itemPerPage = 5;
+        const itemPerPage = 30;
 
         yield delay(500)
 

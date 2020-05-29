@@ -26,8 +26,3 @@ export const logoutFailure = () => ({
     type: AuthActionTypes.LOGOUT_FAILURE,
     payload: null
 })
-
-export const updateOrders = (order: any) => ({
-    type: AuthActionTypes.ORDERS_UPDATE,
-    payload: order
-})

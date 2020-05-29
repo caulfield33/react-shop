@@ -1,7 +1,7 @@
 import {Reducer} from "redux";
 import {AuthActionTypes, AuthState} from "./types";
 
-const storageUser = localStorage.getItem('react-test-app')
+const storageUser = localStorage.getItem('test-app-user')
 
 export const initialState: AuthState = {
     authData: storageUser ? JSON.parse(storageUser) : null,
@@ -26,21 +26,6 @@ const reducer: Reducer<AuthState> = (state = initialState, action) => {
         case AuthActionTypes.LOGIN_SUCCESS: {
             return {...state, loading: false, authData: action.payload};
         }
-
-        case AuthActionTypes.ORDERS_UPDATE: {
-            return {
-                ...state, loading: false,
-                authData: {
-                    ...state.authData,
-                    user: {
-                        ...state.authData?.user,
-                        orders: state.authData?.user.orders.concat(action.payload)
-                    }
-                }
-            };
-        }
-
-
         case AuthActionTypes.CLEAN_ERRORS: {
             return {...state, loading: false, errors: []};
         }

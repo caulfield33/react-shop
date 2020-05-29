@@ -26,7 +26,5 @@ export enum AuthActionTypes {
     LOGOUT_FAILURE = "@@auth/LOGOUT_FAILURE",
     LOGOUT_REQUEST = "@@auth/LOGOUT_REQUEST",
 
-    ORDERS_UPDATE = "@@auth/ORDERS_UPDATE",
-
     CLEAN_ERRORS = "@@auth/CLEAN_ERRORS"
 }

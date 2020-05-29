@@ -7,8 +7,8 @@ import {IStoreItem} from "../../models/IStoreItem";
 import {Button} from "../../styled";
 import {Redirect} from "react-router";
 import {AppContext} from "../../context/app-context";
-import {orderRequest} from "../../store/cart/actions";
 import {objectToArray} from "../../services/utils";
+import {orderRequest} from "../../store/orders/actions";
 
 const Wrapper = styled.div`
     padding: var(--small);
@@ -25,7 +25,12 @@ const Checkout: React.FC<Props> = () => {
     const appContext = useContext(AppContext)
     const dispatch = useDispatch();
 
-    const {items, loading, ordered} = useSelector((state: IApplicationState) => state.cart);
+    const {items, loading, ordered} = useSelector((state: IApplicationState) => ({
+            loading: state.orders.loading,
+            ordered: state.cart.ordered,
+            items: state.cart.items,
+        })
+    );
 
     // eslint-disable-next-line
     useEffect(() => appContext.setContext({loading: loading}), [loading])

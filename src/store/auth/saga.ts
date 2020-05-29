@@ -25,7 +25,7 @@ function* loginWorker(action: {type: string, payload: IAuthCredential}) {
         }
 
         yield put(loginSuccess(authData))
-        localStorage.setItem('react-test-app', JSON.stringify(authData))
+        localStorage.setItem('test-app-user', JSON.stringify(authData))
 
     } catch (e) {
         console.log(e)
@@ -37,7 +37,7 @@ function* loginWorker(action: {type: string, payload: IAuthCredential}) {
 function* logoutWorker() {
 
     try {
-        localStorage.removeItem('react-test-app')
+        localStorage.removeItem('test-app-user')
         yield put(logoutSuccess())
     } catch (e) {
         yield put(logoutFailure())

@@ -40,7 +40,7 @@ const AppContextProvider = ({children}: Props): JSX.Element => {
         const values = {...contextState, ...settings};
         delete values.setContext
 
-        localStorage.setItem('test-app', JSON.stringify(values))
+        localStorage.setItem('test-app-context', JSON.stringify(values))
 
         _setContext((prevState => {
             return  {...prevState, ...settings}

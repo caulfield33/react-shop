@@ -3,6 +3,7 @@ import {AuthState} from "../store/auth/types";
 import {MyStoreState} from "../store/myStore/types";
 import {StoreState} from "../store/store/types";
 import {CartState} from "../store/cart/types";
+import {OrderState} from "../store/orders/types";
 
 export interface IApplicationState {
     router: RouterState
@@ -10,4 +11,5 @@ export interface IApplicationState {
     myStore: MyStoreState
     store: StoreState,
     cart: CartState
+    orders: OrderState
 }
